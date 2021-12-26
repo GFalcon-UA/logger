@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<!--
+  ~   Copyright 2016-2021 Oleksii V. KHALIKOV, PE
+  ~
+  ~    Licensed under the Apache License, Version 2.0 (the "License");
+  ~    you may not use this file except in compliance with the License.
+  ~    You may obtain a copy of the License at
+  ~
+  ~        http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~    Unless required by applicable law or agreed to in writing, software
+  ~    distributed under the License is distributed on an "AS IS" BASIS,
+  ~    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~    See the License for the specific language governing permissions and
+  ~    limitations under the License.
+  -->
+
+<!DOCTYPE suppressions PUBLIC
+        "-//Checkstyle//DTD SuppressionXpathFilter Experimental Configuration 1.2//EN"
+        "https://checkstyle.org/dtds/suppressions_1_2_xpath_experimental.dtd">
+
+<suppressions>
+    <!-- Tone down the checking for test code -->
+    <suppress-xpath checks="NPathComplexity"
+                    query="/CLASS_DEF[./IDENT[@text='XdocsPagesTest']]
+                           //METHOD_DEF[./IDENT[@text='validateCheckSection'
+                                or @text='getModulePropertyExpectedValue']]"/>
+    <suppress-xpath checks="CyclomaticComplexity"
+                    query="/CLASS_DEF[./IDENT[@text='XdocsPagesTest']]//METHOD_DEF"/>
+    <!-- Suppressions from PMD configuration -->
+    <!-- JavadocMethodCheck, JavadocStyleCheck, JavadocUtil.getJavadocTags() - deprecated -->
+    <suppress-xpath checks="CyclomaticComplexity"
+                    query="/CLASS_DEF[./IDENT[@text='JavadocMethodCheck'
+                     or @text='JavadocStyleCheck' or @text='CustomImportOrderCheck']]//METHOD_DEF"/>
+    <!-- there are 3 thrown and all of them could be caused by xml parsing -->
+    <suppress-xpath checks="ThrowsCount"
+                    query="/CLASS_DEF[./IDENT[@text='XmlMetaReader']]
+                        //METHOD_DEF[./IDENT[@text='read']]/LITERAL_THROWS"/>
+</suppressions>
