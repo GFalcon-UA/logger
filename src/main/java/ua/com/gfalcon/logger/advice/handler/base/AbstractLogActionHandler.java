@@ -2,7 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
- * Copyright (c) 2021-2021 Oleksii V. KHALIKOV, PE.
+ * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -44,13 +44,13 @@ public abstract class AbstractLogActionHandler implements LogActionHandler {
     public static final String METHOD_PARAM = "method";
     public static final String METHOD_SIGNATURE = "signature";
 
-    protected PrettyLoggable prettyLoggable;
+    protected PrettyLoggable<? extends Class<?>> prettyLoggable;
 
-    protected AbstractLogActionHandler(PrettyLoggable prettyLoggable) {
+    protected AbstractLogActionHandler(PrettyLoggable<? extends Class<?>> prettyLoggable) {
         this.prettyLoggable = prettyLoggable;
     }
 
-    protected boolean isApplicable(Method method, Class<? extends Annotation> desiredAnnotation) {
-        return method.isAnnotationPresent(Log.class) && method.isAnnotationPresent(desiredAnnotation);
+    protected boolean isNotApplicable(Method method, Class<? extends Annotation> desiredAnnotation) {
+        return !method.isAnnotationPresent(Log.class) || !method.isAnnotationPresent(desiredAnnotation);
     }
 }

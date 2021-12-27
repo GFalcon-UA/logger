@@ -2,6 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
+ * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +25,7 @@
 
 package ua.com.gfalcon.logger.loggabletype.cases.nestedextractor;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -45,6 +46,6 @@ public class NestedPojoExtractor implements ContextParamExtractor<NestedPojo> {
 
     @Override
     public List<Class<?>> getExtractableClasses() {
-        return Arrays.asList(NestedPojo.class);
+        return Collections.singletonList(NestedPojo.class);
     }
 }

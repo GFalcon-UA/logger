@@ -2,6 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
+ * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,15 +27,19 @@ package ua.com.gfalcon.logger.common;
 
 import java.text.BreakIterator;
 
-import static org.apache.commons.lang3.StringUtils.EMPTY;
-import static org.apache.commons.lang3.text.WordUtils.capitalizeFully;
-import static org.apache.commons.lang3.text.WordUtils.uncapitalize;
+import static org.apache.commons.text.WordUtils.capitalizeFully;
+import static org.apache.commons.text.WordUtils.uncapitalize;
 import org.apache.commons.lang3.StringUtils;
 
 /**
  * Text utils.
  */
 public class WordUtils {
+
+    public static final String EMPTY = "";
+
+    private WordUtils() {
+    }
 
     /**
      * Converts {@code sourceString} to a camelCase string using {@code delimiters}.

@@ -2,6 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
+ * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +34,7 @@ import static ua.com.gfalcon.logger.parameters.loggabletype.LookupResult.LookupT
 import static ua.com.gfalcon.logger.parameters.loggabletype.LookupResult.LookupType.LAZY;
 import static ua.com.gfalcon.logger.parameters.loggabletype.LookupResult.LookupType.RESOLVED;
 import static ua.com.gfalcon.logger.parameters.loggabletype.LookupResult.LookupType.UNRESOLVED;
+import ua.com.gfalcon.logger.parameters.loggabletype.exception.LoggerException;
 import ua.com.gfalcon.logger.parameters.loggabletype.exception.UnresolvedLookupException;
 
 /**
@@ -47,10 +49,6 @@ public class LookupResult {
     private LookupResult(Supplier<LookupResult> wrappedLookupResultSupplier) {
         this.wrappedLookupResultSupplier = wrappedLookupResultSupplier;
         this.lookupType = LAZY;
-    }
-
-    private LookupResult(ResultAccessor resultAccessor) {
-        this(resultAccessor, LAZY);
     }
 
     private LookupResult(ResultAccessor resultAccessor, LookupType lookupType) {
@@ -85,7 +83,7 @@ public class LookupResult {
     public static LookupResult createExceptional(Supplier<Exception> exceptionSupplier) {
 
         return new LookupResult(ResultAccessor.from(() -> {
-            throw new RuntimeException(exceptionSupplier.get());
+            throw new LoggerException(exceptionSupplier.get());
         }), EXCEPTIONAL);
     }
 
@@ -114,7 +112,7 @@ public class LookupResult {
      * Execute for result.
      *
      * @throws UnresolvedLookupException if lookup Is unresolved
-     * @throws RuntimeException          for all user defined exceptions
+     * @throws LoggerException           for all user defined exceptions
      */
     public Map<String, Object> executeForResult() {
         LookupResult finalLookup = unWrapLazyLookup();

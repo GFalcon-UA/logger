@@ -2,6 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
+ * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,19 +26,15 @@
 package ua.com.gfalcon.logger;
 
 import static java.text.MessageFormat.format;
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -56,7 +53,7 @@ class LogContextDefaultTest {
     private static final String QUOTE_STATUS_KEY = "quoteStatus";
     private static final String QUOTE_STATUS_VALUE = "Jumping";
 
-    private LogContext<Long, String> logContextDefault = new LogContextDefault();
+    private final LogContext<Long, String> logContextDefault = new LogContextDefault();
 
     private static final String CONTEXT_PREFIX = "ctx:{";
     private static final String CONTEXT_SUFFIX = "}";
@@ -105,10 +102,6 @@ class LogContextDefaultTest {
         for (int i = 0; i < args.length; i = i + 2) {
             map.put(args[i], args[i + 1]);
         }
-        Map<String, String> nestedMap = new LinkedHashMap<>();
-        nestedMap.put("something", "good");
-        nestedMap.put("nothing", "bad");
-//    map.put("nes", "");
         return map;
     }
 
@@ -118,74 +111,4 @@ class LogContextDefaultTest {
         return StringUtils.join(message, contextPrefix, params, CONTEXT_SUFFIX);
     }
 
-    private static class ClassWithCustomToString {
-        @Override
-        public String toString() {
-            return "customToString";
-        }
-    }
-
-    @Test
-    void testStream() {
-        Optional<Dummy> first = Stream.of(new Dummy(false), new Dummy(true), new Dummy(false), new Dummy(false),
-                        new Dummy(true), new Dummy(false))
-                .filter(Dummy::isResolved)
-                .findFirst();
-
-    }
-
-    @Test
-    void testInterfaceCheck() {
-        DummyBase dummyBase = new DummyBase();
-        DummyDerived dummyDerived = new DummyDerived();
-
-        assertTrue(dummyBase instanceof Serializable);
-        assertTrue(dummyDerived instanceof Serializable);
-    }
-
-    private static class DummyBase implements Serializable {
-    }
-
-    private static class DummyDerived extends DummyBase {
-    }
-
-    private static class Dummy {
-        private static int counter_gl = 0;
-        boolean resolved;
-        int counter;
-
-        public Dummy(boolean resolved) {
-            counter_gl++;
-            counter = counter_gl;
-            this.resolved = resolved;
-        }
-
-        public boolean isResolved() {
-            LOG.error("Resolving..." + counter);
-            return resolved;
-        }
-    }
-
-    private static class DummyClass {
-        private String name;
-        private Long value;
-
-        DummyClass(String name, Long value) {
-            this.name = name;
-            this.value = value;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public Long getValue() {
-            return value;
-        }
-
-        @Override
-        public String toString() {
-            return "dummyClassToString";
-        }
-    }
 }

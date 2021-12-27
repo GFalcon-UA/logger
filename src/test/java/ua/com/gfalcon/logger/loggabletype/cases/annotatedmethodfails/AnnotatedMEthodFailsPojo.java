@@ -2,6 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
+ * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +31,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import ua.com.gfalcon.logger.annotation.LoggableType;
 import ua.com.gfalcon.logger.loggabletype.cases.BasePojo;
+import ua.com.gfalcon.logger.parameters.loggabletype.exception.LoggerException;
 
 @LoggableType
 public class AnnotatedMEthodFailsPojo implements BasePojo {
@@ -38,6 +40,6 @@ public class AnnotatedMEthodFailsPojo implements BasePojo {
     @JsonIgnore
     @LoggableType.ExtractionMethod
     public Map<String, Object> getLogParams() {
-        throw new RuntimeException();
+        throw new LoggerException();
     }
 }

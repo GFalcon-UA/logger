@@ -2,6 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
+ * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -68,6 +69,7 @@ import ua.com.gfalcon.logger.loggabletype.cases.simpleextractor.SimpleExtractorP
 import ua.com.gfalcon.logger.loggabletype.cases.unextractablefield.PojoWithUnextractableField;
 import ua.com.gfalcon.logger.parameters.loggabletype.AnnotatedObject;
 import ua.com.gfalcon.logger.parameters.loggabletype.LookupResult;
+import ua.com.gfalcon.logger.parameters.loggabletype.exception.LoggerException;
 import ua.com.gfalcon.logger.parameters.loggabletype.exception.LookupConflictException;
 import ua.com.gfalcon.logger.parameters.loggabletype.exception.RecursiveLookupException;
 import ua.com.gfalcon.logger.parameters.loggabletype.exception.RepeatedFieldsException;
@@ -79,11 +81,11 @@ import ua.com.gfalcon.logger.parameters.loggabletype.util.AnnotationReflectionLo
 @ContextConfiguration(classes = {AnnotationReflectionLookupUtilsTest.class, ContextExtractorFactoryConfiguration.class})
 @ComponentScan("ua.com.gfalcon.logger")
 @ExtendWith(SpringExtension.class)
-public class AnnotationReflectionLookupUtilsTest {
+class AnnotationReflectionLookupUtilsTest {
     @Autowired
     private AnnotationReflectionLookupUtils reflectionLookupUtils;
 
-    private ObjectMapper objectMapper = new ObjectMapper().configure(FAIL_ON_EMPTY_BEANS, false);
+    private final ObjectMapper objectMapper = new ObjectMapper().configure(FAIL_ON_EMPTY_BEANS, false);
 
     private static final SimpleExtractorPojo POJO_A1 = new SimpleExtractorPojo();
     private static final PojoWithNestedPojo POJO_A2 = new PojoWithNestedPojo();
@@ -107,7 +109,7 @@ public class AnnotationReflectionLookupUtilsTest {
 
     @ParameterizedTest(name = "Should {0}")
     @MethodSource("paramsForShouldProduceCorrectResult")
-    public void shouldProduceCorrectResult(String name, BasePojo initial, JsonNode expected) throws Exception {
+    void shouldProduceCorrectResult(String name, BasePojo initial, JsonNode expected) throws Exception {
         //given
         AnnotatedObject<LoggableType> annotatedObject = AnnotatedObject.createWithAnnotation(initial,
                 LoggableType.class);
@@ -142,7 +144,7 @@ public class AnnotationReflectionLookupUtilsTest {
 
     @ParameterizedTest(name = "Should {0}")
     @MethodSource("paramsForShouldThrowException")
-    public void shouldThrowException(String name, BasePojo initial, Class<? extends Exception> exceptionClass) {
+    void shouldThrowException(String name, BasePojo initial, Class<? extends Exception> exceptionClass) {
         //given
         AnnotatedObject<LoggableType> annotatedObject = AnnotatedObject.createWithAnnotation(initial,
                 LoggableType.class);
@@ -154,7 +156,7 @@ public class AnnotationReflectionLookupUtilsTest {
         Assertions.assertTrue(lookupResult.isExceptional());
         try {
             lookupResult.executeForResult();
-        } catch (RuntimeException e) {
+        } catch (LoggerException e) {
             Assertions.assertEquals(exceptionClass, Optional.ofNullable(e.getCause())
                     .orElse(e)
                     .getClass());

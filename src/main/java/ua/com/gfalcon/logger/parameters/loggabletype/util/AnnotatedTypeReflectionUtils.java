@@ -2,6 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
+ * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -46,13 +47,16 @@ import ua.com.gfalcon.logger.parameters.loggabletype.AnnotatedObject;
  */
 public class AnnotatedTypeReflectionUtils {
 
+    private AnnotatedTypeReflectionUtils() {
+    }
+
     /**
      * Get classes hierarchy.
      */
-    public static List<Class> getClassesHierarchy(Class clazz) {
-        List<Class> classList = new ArrayList<>();
+    public static List<Class<?>> getClassesHierarchy(Class<?> clazz) {
+        List<Class<?>> classList = new ArrayList<>();
         classList.add(clazz);
-        Class superclass = clazz.getSuperclass();
+        Class<?> superclass = clazz.getSuperclass();
         classList.add(superclass);
         while (superclass != Object.class) {
             clazz = superclass;
@@ -68,14 +72,14 @@ public class AnnotatedTypeReflectionUtils {
     /**
      * Get classes to extract.
      */
-    public static List<Class> getClassesToExtract(AnnotatedObject<LoggableType> annotatedObject) {
+    public static List<Class<?>> getClassesToExtract(AnnotatedObject<LoggableType> annotatedObject) {
         LoggableType annotation = annotatedObject.getAnnotation();
         if (isNull(annotation)) {
             return Collections.emptyList();
         }
 
 
-        Class objectClass = annotatedObject.getObjectClass();
+        Class<?> objectClass = annotatedObject.getObjectClass();
         return (annotation.ignoreParents()) ? Collections.singletonList(objectClass) : getClassesHierarchy(objectClass);
     }
 
@@ -111,17 +115,11 @@ public class AnnotatedTypeReflectionUtils {
     /**
      * Is recursive loop.
      */
-    public static boolean isRecursiveLoop(Map<Class, List<Class>> fieldsProcessedBefore, Field currentField) {
-        if (isNull(currentField)) {
-            return false;
-        }
-
-        Optional<List<Class>> classes = Optional.ofNullable(fieldsProcessedBefore.get(currentField.getType()));
-        if (classes.isPresent()) {
-            return classes.map(clazzes -> clazzes.contains(currentField.getDeclaringClass()))
-                    .get();
-        }
-
-        return false;
+    public static boolean isRecursiveLoop(Map<Class<?>, List<Class<?>>> fieldsProcessedBefore, Field currentField) {
+        return Optional.ofNullable(currentField)
+                .map(f -> Optional.ofNullable(fieldsProcessedBefore.get(f.getType()))
+                        .map(list -> list.contains(currentField.getDeclaringClass()))
+                        .orElse(false))
+                .orElse(false);
     }
 }

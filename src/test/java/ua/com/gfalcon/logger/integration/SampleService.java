@@ -2,6 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
+ * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,6 +32,7 @@ import org.springframework.stereotype.Component;
 import ua.com.gfalcon.logger.advice.pojo.Pojo;
 import ua.com.gfalcon.logger.annotation.ContextParam;
 import ua.com.gfalcon.logger.annotation.Log;
+import ua.com.gfalcon.logger.parameters.loggabletype.exception.LoggerException;
 
 @Component
 public class SampleService {
@@ -123,7 +125,7 @@ public class SampleService {
     @Log
     @Log.Exit
     public void methodTerminatedWithException() {
-        throw new RuntimeException();
+        throw new LoggerException();
     }
 }
 

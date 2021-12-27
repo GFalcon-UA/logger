@@ -2,6 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
+ * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +32,6 @@ import org.springframework.stereotype.Component;
 import ua.com.gfalcon.logger.LogContext;
 import ua.com.gfalcon.logger.ObjectlessPrettyLoggable;
 import ua.com.gfalcon.logger.PrettyLoggable;
-import ua.com.gfalcon.logger.parameters.extractor.ContextParamExtractorFactory;
 import ua.com.gfalcon.logger.parameters.loggabletype.util.AnnotationReflectionLookupUtils;
 
 /**
@@ -39,33 +39,31 @@ import ua.com.gfalcon.logger.parameters.loggabletype.util.AnnotationReflectionLo
  */
 @Component
 public class LogActionHandlerFactory {
-    private AnnotationReflectionLookupUtils reflectionLookupUtils;
-    private ContextParamExtractorFactory contextParamExtractorFactory;
-    private LogContext<Long, String> logContext;
+    private final AnnotationReflectionLookupUtils reflectionLookupUtils;
+    private final LogContext<Long, String> logContext;
 
     /**
      * Create instance.
      */
     @Autowired
     public LogActionHandlerFactory(AnnotationReflectionLookupUtils reflectionLookupUtils,
-            ContextParamExtractorFactory contextParamExtractorFactory, LogContext<Long, String> logContext) {
+            LogContext<Long, String> logContext) {
         this.reflectionLookupUtils = reflectionLookupUtils;
-        this.contextParamExtractorFactory = contextParamExtractorFactory;
         this.logContext = logContext;
     }
 
     public LogActionHandler createEntryHandler(Logger logger) {
-        PrettyLoggable prettyLoggable = new ObjectlessPrettyLoggable(logger, logContext);
+        PrettyLoggable<Long> prettyLoggable = new ObjectlessPrettyLoggable<>(logger, logContext);
         return new LogEntryActionHandler(prettyLoggable, reflectionLookupUtils);
     }
 
     public LogActionHandler createExectimeHandler(Logger logger) {
-        PrettyLoggable prettyLoggable = new ObjectlessPrettyLoggable(logger, logContext);
+        PrettyLoggable<Long> prettyLoggable = new ObjectlessPrettyLoggable<>(logger, logContext);
         return new LogExectimeActionHandler(prettyLoggable);
     }
 
     public LogActionHandler createExitHandler(Logger logger) {
-        PrettyLoggable prettyLoggable = new ObjectlessPrettyLoggable(logger, logContext);
+        PrettyLoggable<Long> prettyLoggable = new ObjectlessPrettyLoggable<>(logger, logContext);
         return new LogExitActionHandler(prettyLoggable, reflectionLookupUtils);
     }
 }

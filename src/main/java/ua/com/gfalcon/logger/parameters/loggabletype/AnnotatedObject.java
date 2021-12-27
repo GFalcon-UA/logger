@@ -2,6 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
+ * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,8 +35,8 @@ import java.util.function.Supplier;
  */
 public class AnnotatedObject<A extends Annotation> {
 
-    private Object object;
-    private A annotation;
+    private final Object object;
+    private final A annotation;
 
     private AnnotatedObject(Object object, A annotation) {
         this.object = object;
@@ -50,7 +51,7 @@ public class AnnotatedObject<A extends Annotation> {
         return object;
     }
 
-    public Class getObjectClass() {
+    public Class<?> getObjectClass() {
         return object.getClass();
     }
 

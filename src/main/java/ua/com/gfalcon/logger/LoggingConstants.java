@@ -2,6 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
+ * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,4 +35,7 @@ public final class LoggingConstants {
     public static final String TIME_LOGGING_CONTEXT = "timeLoggingContext";
     public static final String RETURNED_RESULT = "@return";
     public static final String SINGLE_PROPERTY = "@single";
+
+    private LoggingConstants() {
+    }
 }

@@ -47,8 +47,13 @@ import ua.com.gfalcon.logger.advice.handler.base.AbstractLogActionHandler;
 @Aspect
 @Component
 public class LoggingAdvice {
+
+    private final LogActionHandlerFactory logActionHandlerFactory;
+
     @Autowired
-    private LogActionHandlerFactory logActionHandlerFactory;
+    public LoggingAdvice(LogActionHandlerFactory logActionHandlerFactory) {
+        this.logActionHandlerFactory = logActionHandlerFactory;
+    }
 
     /**
      * Logging Advice.

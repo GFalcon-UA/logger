@@ -2,6 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
+ * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -58,6 +59,13 @@ import static ua.com.gfalcon.logger.parameters.loggabletype.util.AnnotatedTypeRe
 import static ua.com.gfalcon.logger.parameters.loggabletype.util.AnnotatedTypeReflectionUtils.getRenamedFieldNameOrDefault;
 import static ua.com.gfalcon.logger.parameters.loggabletype.util.AnnotatedTypeReflectionUtils.getSupplierMethod;
 import static ua.com.gfalcon.logger.parameters.loggabletype.util.AnnotatedTypeReflectionUtils.isRecursiveLoop;
+import static ua.com.gfalcon.logger.parameters.loggabletype.util.AnnotationLookupConstants.DO_NOTHING_LOOKUP;
+import static ua.com.gfalcon.logger.parameters.loggabletype.util.AnnotationLookupConstants.FIELD_NON_EXTRACTABLE_EXCEPTION_MESSAGE;
+import static ua.com.gfalcon.logger.parameters.loggabletype.util.AnnotationLookupConstants.FIELD_TO_FIELD_OBJ_CURRIED;
+import static ua.com.gfalcon.logger.parameters.loggabletype.util.AnnotationLookupConstants.IS_FIELD_COMPLEX;
+import static ua.com.gfalcon.logger.parameters.loggabletype.util.AnnotationLookupConstants.IS_TO_STRING_APPLICABLE_TO_CLASS;
+import static ua.com.gfalcon.logger.parameters.loggabletype.util.AnnotationLookupConstants.THROW_EX_LOOKUP;
+import static ua.com.gfalcon.logger.parameters.loggabletype.util.AnnotationLookupConstants.TO_PROCESSED_FIELDS_METADATA;
 import ua.com.gfalcon.logger.annotation.LoggableType;
 import ua.com.gfalcon.logger.common.MapUtils;
 import ua.com.gfalcon.logger.parameters.extractor.ContextParamExtractor;
@@ -76,10 +84,14 @@ import ua.com.gfalcon.logger.parameters.loggabletype.exception.UnresolvedLookupE
  */
 @Component
 @SuppressWarnings("unchecked")
-public class AnnotationReflectionLookupUtils implements AnnotationLookupConstants {
+public class AnnotationReflectionLookupUtils {
+
+    private final ContextParamExtractorFactory contextParamExtractorFactory;
 
     @Autowired
-    private ContextParamExtractorFactory contextParamExtractorFactory;
+    public AnnotationReflectionLookupUtils(ContextParamExtractorFactory contextParamExtractorFactory) {
+        this.contextParamExtractorFactory = contextParamExtractorFactory;
+    }
 
     /**
      * Create lookup result.
@@ -132,7 +144,7 @@ public class AnnotationReflectionLookupUtils implements AnnotationLookupConstant
                 .collect(toMap(Entry::getKey, Entry::getValue));
     }
 
-    private LookupResult collectorLookup(Map<Class, List<Class>> fieldsProcessedBefore,
+    private LookupResult collectorLookup(Map<Class<?>, List<Class<?>>> fieldsProcessedBefore,
             Pair<Field, AnnotatedObject<LoggableType>> fieldObjPair) {
         List<Pair<Field, AnnotatedObject<LoggableType>>> allFields = getAnnotatedFieldObjPairs(fieldObjPair.getRight());
         LookupResult eligibleFieldsContextParamLookup = getCompositeFieldsContextParamLookup(fieldsProcessedBefore,
@@ -153,6 +165,9 @@ public class AnnotationReflectionLookupUtils implements AnnotationLookupConstant
     }
 
     private LookupResult extractorLookup(AnnotatedObject<LoggableType> annotatedObject) {
+        if (isNull(annotatedObject)) {
+            return LookupResult.createUnresolved();
+        }
         ContextParamExtractor extractor = contextParamExtractorFactory.getExtractorByClass(
                 annotatedObject.getObjectClass());
         if (isNull(extractor)) {
@@ -166,7 +181,7 @@ public class AnnotationReflectionLookupUtils implements AnnotationLookupConstant
             AnnotatedObject<LoggableType> annotatedObject) {
         Function<Field, Pair<Field, AnnotatedObject<LoggableType>>> transformFn = FIELD_TO_FIELD_OBJ_CURRIED.apply(
                 annotatedObject.getObject());
-        List<Class> classes = getClassesToExtract(annotatedObject);
+        List<Class<?>> classes = getClassesToExtract(annotatedObject);
         return classes.stream()
                 .map(Class::getDeclaredFields)
                 .flatMap(Arrays::stream)
@@ -175,7 +190,7 @@ public class AnnotationReflectionLookupUtils implements AnnotationLookupConstant
                 .collect(toList());
     }
 
-    private Map<Class, List<Class>> getClassFieldRelationMetadata(
+    private Map<Class<?>, List<Class<?>>> getClassFieldRelationMetadata(
             List<Pair<Field, AnnotatedObject<LoggableType>>> compositeFields) {
         return compositeFields.stream()
                 .map(Pair::getLeft)
@@ -183,8 +198,7 @@ public class AnnotationReflectionLookupUtils implements AnnotationLookupConstant
                 .collect(groupingBy(Pair::getLeft, mapping(Pair::getRight, toList())));
     }
 
-    //TODO CLEANUP/REFACTOR
-    private LookupResult getCompositeFieldsContextParamLookup(Map<Class, List<Class>> fieldsProcessedBefore,
+    private LookupResult getCompositeFieldsContextParamLookup(Map<Class<?>, List<Class<?>>> fieldsProcessedBefore,
             List<Pair<Field, AnnotatedObject<LoggableType>>> allFields) {
         List<Pair<Field, AnnotatedObject<LoggableType>>> compositeFields = allFields.stream()
                 .filter(IS_FIELD_COMPLEX)
@@ -224,21 +238,7 @@ public class AnnotationReflectionLookupUtils implements AnnotationLookupConstant
                 .collect(toMap(Entry::getKey, Entry::getValue)));
     }
 
-    private Map<String, Object> mergeContextParamMaps(Map<String, Object> simpleContextParams,
-            Map<String, Object> complexContextParams, Field complexField) {
-        if (isNull(complexField)) {
-            return MapUtils.mergeMaps(simpleContextParams, complexContextParams);
-        }
-
-        Map<String, Object> finalResult = ImmutableMap.<String, Object>builder()
-                .putAll(simpleContextParams)
-                .put(complexField.getName(), complexContextParams)
-                .build();
-
-        return finalResult;
-    }
-
-    private LookupResult objectCollectorLookup(Map<Class, List<Class>> fieldsProcessedBefore,
+    private LookupResult objectCollectorLookup(Map<Class<?>, List<Class<?>>> fieldsProcessedBefore,
             Pair<Field, AnnotatedObject<LoggableType>> fieldObjPair) {
         AnnotatedObject<LoggableType> annotatedObject = fieldObjPair.getRight();
 
@@ -261,7 +261,7 @@ public class AnnotationReflectionLookupUtils implements AnnotationLookupConstant
                 .build();
 
         fields.stream()
-                .map(pair -> pair.getKey())
+                .map(Pair::getKey)
                 .forEach(field -> fieldClassesCollision.put(getRenamedFieldNameOrDefault(field),
                         field.getDeclaringClass()
                                 .getName()));
@@ -279,7 +279,7 @@ public class AnnotationReflectionLookupUtils implements AnnotationLookupConstant
 
     }
 
-    private LookupResult strategyLookupForField(Map<Class, List<Class>> fieldsProcessedBefore,
+    private LookupResult strategyLookupForField(Map<Class<?>, List<Class<?>>> fieldsProcessedBefore,
             Pair<Field, AnnotatedObject<LoggableType>> fieldObjPair) {
         if (isRecursiveLoop(fieldsProcessedBefore, fieldObjPair.getLeft())) {
             return THROW_EX_LOOKUP.apply(new RecursiveLookupException());
@@ -328,11 +328,6 @@ public class AnnotationReflectionLookupUtils implements AnnotationLookupConstant
         }
 
         throw new UnresolvedLookupException(format(FIELD_NON_EXTRACTABLE_EXCEPTION_MESSAGE, fieldName));
-    }
-
-    private Pair<LookupResult, AnnotatedObject<LoggableType>> toLookupObjFromCompositeFieldObjPair(
-            Map<Class, List<Class>> fieldsProcessedBefore, Pair<Field, AnnotatedObject<LoggableType>> fieldObjPair) {
-        return Pair.of(strategyLookupForField(fieldsProcessedBefore, fieldObjPair), fieldObjPair.getRight());
     }
 
 }

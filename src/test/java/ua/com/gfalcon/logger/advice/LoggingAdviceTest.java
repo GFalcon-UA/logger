@@ -2,6 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
+ * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -65,10 +66,10 @@ import ua.com.gfalcon.logger.integration.SampleService;
 @ExtendWith(SpringExtension.class)
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class LoggingAdviceTest {
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
-    private PrintStream stdout = System.out;
-    private PrintStream stderr = System.err;
+    private final PrintStream stdout = System.out;
+    private final PrintStream stderr = System.err;
 
     private ByteArrayOutputStream outStream;
 
@@ -96,7 +97,7 @@ public class LoggingAdviceTest {
 
     @ParameterizedTest(name = "Should {0}")
     @MethodSource("argsForTestEntryLogging")
-    public void testEntryLogging(String name, Runnable methodRun, String fileName) throws Exception {
+    void testEntryLogging(String name, Runnable methodRun, String fileName) throws Exception {
         //when
         methodRun.run();
 
@@ -123,7 +124,7 @@ public class LoggingAdviceTest {
 
     @ParameterizedTest(name = "Should {0}")
     @MethodSource("argsForTestExectimeLogging")
-    public void testExectimeLogging(String name, Runnable methodRun, String fileName) throws Exception {
+    void testExectimeLogging(String name, Runnable methodRun, String fileName) throws Exception {
         //when
         methodRun.run();
 
@@ -149,7 +150,7 @@ public class LoggingAdviceTest {
     }
 
     @Test
-    public void shouldLogTime() throws Exception {
+    void shouldLogTime() throws Exception {
         //when
         sampleService.methodWihExecTimeLogging();
 
@@ -167,7 +168,7 @@ public class LoggingAdviceTest {
 
     @ParameterizedTest(name = "Should {0}")
     @MethodSource("argsForTestExitLogging")
-    public void testExitLogging(String name, Runnable methodRun, String fileName) throws Exception {
+    void testExitLogging(String name, Runnable methodRun, String fileName) throws Exception {
         //when
         methodRun.run();
 
@@ -189,7 +190,7 @@ public class LoggingAdviceTest {
     }
 
     @Test
-    public void shouldLogExceptionTerminatedMethod() throws Exception {
+    void shouldLogExceptionTerminatedMethod() throws Exception {
         //when
         try {
             sampleService.methodTerminatedWithException();

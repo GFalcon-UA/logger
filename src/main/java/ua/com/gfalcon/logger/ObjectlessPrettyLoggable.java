@@ -2,6 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
+ * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,11 +30,11 @@ import org.slf4j.Logger;
 /**
  * Objectless pretty loggable.
  */
-public class ObjectlessPrettyLoggable implements PrettyLoggable {
-    private Logger logger;
-    private LogContext logContext;
+public class ObjectlessPrettyLoggable<T> implements PrettyLoggable<T> {
+    private final Logger logger;
+    private final LogContext<T, String> logContext;
 
-    public ObjectlessPrettyLoggable(Logger logger, LogContext logContext) {
+    public ObjectlessPrettyLoggable(Logger logger, LogContext<T, String> logContext) {
         this.logger = logger;
         this.logContext = logContext;
     }
@@ -44,7 +45,7 @@ public class ObjectlessPrettyLoggable implements PrettyLoggable {
     }
 
     @Override
-    public LogContext getLogContext() {
+    public LogContext<T, String> getLogContext() {
         return logContext;
     }
 }

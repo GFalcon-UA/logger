@@ -46,7 +46,7 @@ public class LogEntryActionHandler extends LogFlowActionHandler {
     @Override
     public void perform(Map<String, Object> params) {
         Method method = (Method) params.get(METHOD_PARAM);
-        if (!isApplicable(method, Log.Entry.class)) {
+        if (isNotApplicable(method, Log.Entry.class)) {
             return;
         }
 

@@ -2,6 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
+ * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +35,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import ua.com.gfalcon.logger.common.MapUtils;
+import ua.com.gfalcon.logger.parameters.loggabletype.exception.LoggerException;
 
 /**
  * JSON log context.
@@ -73,7 +75,7 @@ public class LogContextJson implements LogContext<Long, String> {
         try {
             fieldValue = MapUtils.convertMapToJson(contextParams);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("Can't convert context map to json.");
+            throw new LoggerException("Can't convert context map to json.");
         }
 
         Map<String, String> nestedMap = new LinkedHashMap<>();
@@ -118,7 +120,7 @@ public class LogContextJson implements LogContext<Long, String> {
         try {
             return MapUtils.convertMapToJson(logMap);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("Can't convert context map to json.");
+            throw new LoggerException("Can't convert context map to json.");
         }
     }
 

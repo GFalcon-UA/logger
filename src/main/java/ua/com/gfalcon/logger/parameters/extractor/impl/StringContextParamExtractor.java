@@ -2,6 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
+ * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,8 +27,6 @@ package ua.com.gfalcon.logger.parameters.extractor.impl;
 
 import static java.util.Collections.singletonList;
 import static java.util.Collections.singletonMap;
-import static java.util.Collections.unmodifiableList;
-import static java.util.Collections.unmodifiableMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,11 +41,11 @@ import ua.com.gfalcon.logger.parameters.extractor.ContextParamExtractor;
 public class StringContextParamExtractor implements ContextParamExtractor<String> {
     @Override
     public List<Class<?>> getExtractableClasses() {
-        return unmodifiableList(singletonList(String.class));
+        return singletonList(String.class);
     }
 
     @Override
     public Map<String, Object> extractParams(String name, String parameter) {
-        return unmodifiableMap(singletonMap(name, parameter));
+        return singletonMap(name, parameter);
     }
 }

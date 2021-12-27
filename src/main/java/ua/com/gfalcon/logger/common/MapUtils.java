@@ -2,6 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
+ * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -45,6 +46,9 @@ public class MapUtils {
     private static final BinaryOperator DEFAULT_MERGE_FUNCTION = (value1, value2) -> value2;
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
+    private MapUtils() {
+    }
+
     /**
      * Method converts {@code params} context map 'String, Object' into JSON String.
      *
@@ -81,7 +85,7 @@ public class MapUtils {
      * @return an empty map if the argument is <code>null</code>
      */
     public static <K, V> Map<K, V> emptyIfNull(final Map<K, V> map) {
-        return map == null ? new HashMap() : map;
+        return map == null ? new HashMap<>() : map;
     }
 
     /**

@@ -2,6 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
+ * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -44,8 +45,6 @@ import ua.com.gfalcon.logger.parameters.loggabletype.util.AnnotationReflectionLo
  */
 public class LogExitActionHandler extends LogFlowActionHandler {
 
-    private AnnotationReflectionLookupUtils reflectionLookupUtils;
-
     public LogExitActionHandler(PrettyLoggable prettyLoggable, AnnotationReflectionLookupUtils reflectionLookupUtils) {
         super(prettyLoggable, reflectionLookupUtils);
     }
@@ -53,7 +52,7 @@ public class LogExitActionHandler extends LogFlowActionHandler {
     @Override
     public void perform(Map<String, Object> params) {
         Method method = (Method) params.get(METHOD_PARAM);
-        if (!isApplicable(method, Log.Exit.class)) {
+        if (isNotApplicable(method, Log.Exit.class)) {
             return;
         }
 

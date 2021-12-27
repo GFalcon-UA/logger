@@ -51,7 +51,8 @@ import ua.com.gfalcon.logger.parameters.loggabletype.util.AnnotationReflectionLo
 public abstract class LogFlowActionHandler extends AbstractLogActionHandler {
     protected AnnotationReflectionLookupUtils reflectionLookupUtils;
 
-    public LogFlowActionHandler(PrettyLoggable prettyLoggable, AnnotationReflectionLookupUtils reflectionLookupUtils) {
+    protected LogFlowActionHandler(PrettyLoggable<? extends Class<?>> prettyLoggable,
+            AnnotationReflectionLookupUtils reflectionLookupUtils) {
         super(prettyLoggable);
         this.reflectionLookupUtils = reflectionLookupUtils;
     }

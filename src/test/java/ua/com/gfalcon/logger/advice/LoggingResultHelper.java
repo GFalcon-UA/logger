@@ -2,6 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
+ * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,6 +37,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import ua.com.gfalcon.logger.parameters.loggabletype.exception.LoggerException;
+
 public class LoggingResultHelper {
     public static final String PARAM_STR = "STR_PARAM";
     public static final Long PARAM_LONG = 1L;
@@ -44,8 +47,8 @@ public class LoggingResultHelper {
 
     public static class JsonLogAssertion {
         private ByteArrayOutputStream baos;
-        private Queue<String> nestedProperties = new LinkedList<>();
-        private List<String> propertyValuesIgnored = new ArrayList<>();
+        private final Queue<String> nestedProperties = new LinkedList<>();
+        private final List<String> propertyValuesIgnored = new ArrayList<>();
 
         public JsonLogAssertion givenSource(ByteArrayOutputStream byteArrayOutputStream) {
             this.baos = byteArrayOutputStream;
@@ -82,7 +85,7 @@ public class LoggingResultHelper {
                 Assertions.assertEquals(jsonNode, nodeToTraverse);
 
             } catch (Exception ex) {
-                throw new RuntimeException(ex);
+                throw new LoggerException(ex);
             }
         }
 

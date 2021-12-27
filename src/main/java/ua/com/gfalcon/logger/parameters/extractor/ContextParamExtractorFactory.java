@@ -2,6 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
+ * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,9 +38,8 @@ import java.util.stream.Stream;
  */
 @SuppressWarnings("unchecked")
 public class ContextParamExtractorFactory {
+    private final Map<Class<?>, ContextParamExtractor<?>> contextParamExtractors;
     private ContextParamExtractor<Object> defaultContextParamExtractor;
-
-    private Map<Class<?>, ContextParamExtractor<?>> contextParamExtractors;
 
     public ContextParamExtractorFactory(List<? extends ContextParamExtractor> contextParamExtractorsList) {
         contextParamExtractors = createParameterExtractorMap(contextParamExtractorsList);

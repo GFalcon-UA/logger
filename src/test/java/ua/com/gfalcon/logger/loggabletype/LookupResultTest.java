@@ -2,6 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
+ * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,6 +38,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import com.google.common.collect.ImmutableMap;
 
 import ua.com.gfalcon.logger.parameters.loggabletype.LookupResult;
+import ua.com.gfalcon.logger.parameters.loggabletype.exception.LoggerException;
 import ua.com.gfalcon.logger.parameters.loggabletype.exception.UnresolvedLookupException;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -48,7 +50,7 @@ class LookupResultTest {
 
     @ParameterizedTest(name = "Should {0}")
     @MethodSource("argsForShouldBeCorrectType")
-    public void shouldBeCorrectType(String caseName, LookupResult lookupResult,
+    void shouldBeCorrectType(String caseName, LookupResult lookupResult,
             LookupResult.LookupType lookupTypeExpected) {
         Assertions.assertEquals(lookupTypeExpected, lookupResult.getLookupType());
 
@@ -67,11 +69,11 @@ class LookupResultTest {
 
     @ParameterizedTest(name = "Should be {0} after unwrapping lazy")
     @MethodSource("argsForShouldBeCorrectTypeOfLazyAfterUnwrap")
-    public void shouldBeCorrectTypeOfLazyAfterUnwrap(String caseName, LookupResult lookupResult,
+    void shouldBeCorrectTypeOfLazyAfterUnwrap(String caseName, LookupResult lookupResult,
             LookupResult.LookupType lookupTypeExpected) {
-        Assertions.assertEquals(lookupResult.getLookupType(), LookupResult.LookupType.LAZY);
+        Assertions.assertEquals(LookupResult.LookupType.LAZY, lookupResult.getLookupType());
         Assertions.assertTrue(lookupResult.isCertainLookupType(lookupTypeExpected));
-        Assertions.assertNotEquals(lookupResult.getLookupType(), LookupResult.LookupType.LAZY);
+        Assertions.assertNotEquals(LookupResult.LookupType.LAZY, lookupResult.getLookupType());
     }
 
     private Stream<Arguments> argsForShouldBeCorrectTypeOfLazyAfterUnwrap() {
@@ -86,20 +88,20 @@ class LookupResultTest {
 
     @ParameterizedTest(name = "Should throw {0}")
     @MethodSource("argsForShouldThrowExExceptionalAndUnresolvedLookup")
-    public void shouldThrowExExceptionalAndUnresolvedLookup(Class<? extends Exception> expectedException,
+    void shouldThrowExExceptionalAndUnresolvedLookup(Class<? extends Exception> expectedException,
             LookupResult lookupResult) {
         Executable executable = lookupResult::executeForResult;
         Assertions.assertThrows(expectedException, executable);
     }
 
     private Stream<Arguments> argsForShouldThrowExExceptionalAndUnresolvedLookup() {
-        return Stream.of(Arguments.of(RuntimeException.class, createLookupResult(LookupResult.LookupType.EXCEPTIONAL)),
+        return Stream.of(Arguments.of(LoggerException.class, createLookupResult(LookupResult.LookupType.EXCEPTIONAL)),
                 Arguments.of(UnresolvedLookupException.class, createLookupResult(LookupResult.LookupType.UNRESOLVED)));
     }
 
     @ParameterizedTest(name = "Should {0}")
     @MethodSource("argsForShouldProduceCorrectResult")
-    public void shouldProduceCorrectResult(String name, Map<String, Object> expectedResult, LookupResult lookupResult) {
+    void shouldProduceCorrectResult(String name, Map<String, Object> expectedResult, LookupResult lookupResult) {
         Assertions.assertEquals(expectedResult, lookupResult.executeForResult());
     }
 
@@ -120,7 +122,7 @@ class LookupResultTest {
         } else if (lookupType.equals(LookupResult.LookupType.UNRESOLVED)) {
             return LookupResult.createUnresolved();
         } else {
-            return LookupResult.createExceptional(RuntimeException::new);
+            return LookupResult.createExceptional(LoggerException::new);
         }
     }
 }

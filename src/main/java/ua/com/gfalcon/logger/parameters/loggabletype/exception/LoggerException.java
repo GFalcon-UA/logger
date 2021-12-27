@@ -26,7 +26,18 @@
 package ua.com.gfalcon.logger.parameters.loggabletype.exception;
 
 /**
- * Recursive lookup exception.
+ * General exception.
  */
-public class RecursiveLookupException extends LoggerException {
+public class LoggerException extends RuntimeException {
+    public LoggerException(String message) {
+        super(message);
+    }
+
+    public LoggerException() {
+        super();
+    }
+
+    public LoggerException(Exception ex) {
+        super(ex);
+    }
 }
