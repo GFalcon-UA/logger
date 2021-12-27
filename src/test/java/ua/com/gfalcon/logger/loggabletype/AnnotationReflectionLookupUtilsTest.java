@@ -77,7 +77,7 @@ import ua.com.gfalcon.logger.parameters.loggabletype.util.AnnotationReflectionLo
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Configuration
 @ContextConfiguration(classes = {AnnotationReflectionLookupUtilsTest.class, ContextExtractorFactoryConfiguration.class})
-@ComponentScan("ua.com.gfalcon.logger.parameters")
+@ComponentScan("ua.com.gfalcon.logger")
 @ExtendWith(SpringExtension.class)
 public class AnnotationReflectionLookupUtilsTest {
     @Autowired

@@ -24,7 +24,6 @@
         <commons.version>1.9</commons.version>
         <guava.version>31.0.1-jre</guava.version>
         <jackson.version>2.13.1</jackson.version>
-        <junit.version>4.13.2</junit.version>
         <jupiter.version>5.5.2</jupiter.version>
         <spring-test-junit5.version>1.5.0</spring-test-junit5.version>
         <logstash-logback-encoder.version>7.0.1</logstash-logback-encoder.version>
@@ -79,13 +78,6 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

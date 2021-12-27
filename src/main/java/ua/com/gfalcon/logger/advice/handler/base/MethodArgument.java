@@ -1,8 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2018 NIX Solutions Ltd.
- * Copyright (c) 2021-2021 Oleksii V. KHALIKOV, PE.
+ * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,31 +25,51 @@
 package ua.com.gfalcon.logger.advice.handler.base;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-
-import ua.com.gfalcon.logger.PrettyLoggable;
-import ua.com.gfalcon.logger.advice.handler.LogActionHandler;
-import ua.com.gfalcon.logger.annotation.Log;
+import java.lang.reflect.Parameter;
 
 /**
- * Abstract action handler.
+ * Argument of method.
  */
-public abstract class AbstractLogActionHandler implements LogActionHandler {
-    public static final String EXCEPTION_PARAM = "exceptionThrown";
-    public static final String START_MOMENT_PARAM = "startMoment";
-    public static final String FINISH_MOMENT_PARAM = "finishMoment";
-    public static final String INVOCATION_RESULT_PARAM = "invocationResult";
-    public static final String METHOD_ARGS_PARAM = "methodArgs";
-    public static final String METHOD_PARAM = "method";
-    public static final String METHOD_SIGNATURE = "signature";
+public class MethodArgument {
+    private final String name;
+    private final Parameter parameter;
+    private final Object value;
 
-    protected PrettyLoggable prettyLoggable;
-
-    protected AbstractLogActionHandler(PrettyLoggable prettyLoggable) {
-        this.prettyLoggable = prettyLoggable;
+    private MethodArgument() {
+        this("", null, null);
     }
 
-    protected boolean isApplicable(Method method, Class<? extends Annotation> desiredAnnotation) {
-        return method.isAnnotationPresent(Log.class) && method.isAnnotationPresent(desiredAnnotation);
+    /**
+     * Create instance.
+     */
+    public MethodArgument(String name, Parameter parameter, Object value) {
+        this.name = name;
+        this.parameter = parameter;
+        this.value = value;
+    }
+
+    /**
+     * Get name of argument.
+     *
+     * @return if parameter has own name - return this one else predefined names
+     */
+    public String getName() {
+        if (parameter.isNamePresent()) {
+            return parameter.getName();
+        } else {
+            return name;
+        }
+    }
+
+    public Object getValue() {
+        return value;
+    }
+
+    public <T extends Annotation> T getAnnotation(Class<T> annotationClass) {
+        return parameter.getAnnotation(annotationClass);
+    }
+
+    public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
+        return parameter.isAnnotationPresent(annotationClass);
     }
 }

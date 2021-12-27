@@ -24,7 +24,8 @@
 
 package ua.com.gfalcon.logger.configuration;
 
-import static java.util.Collections.EMPTY_MAP;
+import static java.util.Collections.emptyList;
+import static java.util.Collections.emptyMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -45,12 +46,12 @@ public class ContextExtractorFactoryConfiguration {
     private static final ContextParamExtractor<Object> DEFAULT_EXTRACTOR = new ContextParamExtractor<Object>() {
         @Override
         public List<Class<?>> getExtractableClasses() {
-            throw new UnsupportedOperationException();
+            return emptyList();
         }
 
         @Override
         public Map<String, Object> extractParams(String name, Object parameter) {
-            return EMPTY_MAP;
+            return emptyMap();
         }
     };
 
@@ -71,5 +72,10 @@ public class ContextExtractorFactoryConfiguration {
         }
 
         return contextParamExtractorFactory;
+    }
+
+    @Bean
+    public ContextParamExtractor<Object> defaultExtractor() {
+        return DEFAULT_EXTRACTOR;
     }
 }

@@ -2,6 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
+ * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +28,8 @@ package ua.com.gfalcon.logger.advice.handler;
 import java.lang.reflect.Method;
 import java.util.Map;
 
+import org.aspectj.lang.reflect.MethodSignature;
+
 import ua.com.gfalcon.logger.PrettyLoggable;
 import ua.com.gfalcon.logger.advice.handler.base.LogFlowActionHandler;
 import ua.com.gfalcon.logger.annotation.Log;
@@ -47,8 +50,9 @@ public class LogEntryActionHandler extends LogFlowActionHandler {
             return;
         }
 
+        MethodSignature signature = (MethodSignature) params.get(METHOD_SIGNATURE);
         Object[] args = (Object[]) params.get(METHOD_ARGS_PARAM);
 
-        prettyLoggable.logDebug(method.getName() + "() -- >", getAdditionalContextInfo(method.getParameters(), args));
+        prettyLoggable.logDebug(method.getName() + "() -- >", getAdditionalContextInfo(signature, args));
     }
 }
