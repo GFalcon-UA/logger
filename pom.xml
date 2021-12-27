@@ -196,6 +196,8 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
+                    <showWarnings>true</showWarnings>
+                    <failOnWarning>true</failOnWarning>
                 </configuration>
             </plugin>
             <plugin>
