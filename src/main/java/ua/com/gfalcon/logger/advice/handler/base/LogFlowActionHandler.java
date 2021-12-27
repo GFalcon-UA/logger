@@ -57,20 +57,16 @@ public abstract class LogFlowActionHandler extends AbstractLogActionHandler {
     }
 
     protected Map<String, Object> getAdditionalContextInfo(MethodSignature methodSignature, Object[] methodArguments) {
-        Parameter[] parameters = methodSignature.getMethod().getParameters();
+        Parameter[] parameters = methodSignature.getMethod()
+                .getParameters();
         String[] parameterNames = methodSignature.getParameterNames();
         Set<MethodArgument> arguments = new HashSet<>();
         for (int i = 0; i < parameters.length; i++) {
-            MethodArgument argument = new MethodArgument(
-                    parameterNames[i],
-                    parameters[i],
-                    methodArguments[i]
-            );
+            MethodArgument argument = new MethodArgument(parameterNames[i], parameters[i], methodArguments[i]);
             arguments.add(argument);
         }
 
-        Map<String, AnnotatedObject<LoggableType>> nameAnnotatedObjectMap = arguments
-                .stream()
+        Map<String, AnnotatedObject<LoggableType>> nameAnnotatedObjectMap = arguments.stream()
                 .filter(entry -> entry.isAnnotationPresent(ContextParam.class))
                 .map(this::toNameAnnotatedObject)
                 .collect(toMap(Pair::getKey, Pair::getValue));
@@ -97,8 +93,7 @@ public abstract class LogFlowActionHandler extends AbstractLogActionHandler {
         return contextParams.size() == 1 && nonNull(contextParams.get(SINGLE_PROPERTY));
     }
 
-    private Pair<String, AnnotatedObject<LoggableType>> toNameAnnotatedObject(
-            MethodArgument parameterObjectEntry) {
+    private Pair<String, AnnotatedObject<LoggableType>> toNameAnnotatedObject(MethodArgument parameterObjectEntry) {
         ContextParam annotation = parameterObjectEntry.getAnnotation(ContextParam.class);
         String paramName = parameterObjectEntry.getName();
         if (isNotBlank(annotation.value())) {

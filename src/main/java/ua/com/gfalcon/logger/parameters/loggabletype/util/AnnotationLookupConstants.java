@@ -62,8 +62,7 @@ public interface AnnotationLookupConstants {
     Predicate<Pair<Field, AnnotatedObject<LoggableType>>> IS_FIELD_COMPLEX = pair -> pair.getRight()
             .isAnnotated();
 
-    Function<Object, Function<Field, Pair<Field, AnnotatedObject<LoggableType>>>> FIELD_TO_FIELD_OBJ_CURRIED =
-            obj -> field -> Pair.of(
+    Function<Object, Function<Field, Pair<Field, AnnotatedObject<LoggableType>>>> FIELD_TO_FIELD_OBJ_CURRIED = obj -> field -> Pair.of(
             field, AnnotatedObject.createWithAnnotation(getField(field, obj), LoggableType.class));
 
     Function<RuntimeException, LookupResult> THROW_EX_LOOKUP = ex -> LookupResult.createExceptional(() -> {
@@ -72,6 +71,6 @@ public interface AnnotationLookupConstants {
 
     LookupResult DO_NOTHING_LOOKUP = LookupResult.createResolved(() -> new HashMap<>());
 
-    String FIELD_NON_EXTRACTABLE_EXCEPTION_MESSAGE = "Field %s cannot be extracted: "
-            + "No extractor found and toString() is not applicable";
+    String FIELD_NON_EXTRACTABLE_EXCEPTION_MESSAGE =
+            "Field %s cannot be extracted: " + "No extractor found and toString() is not applicable";
 }

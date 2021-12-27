@@ -81,6 +81,21 @@ public class AnnotationReflectionLookupUtils implements AnnotationLookupConstant
     @Autowired
     private ContextParamExtractorFactory contextParamExtractorFactory;
 
+    /**
+     * Create lookup result.
+     *
+     * @param annotatedObject object for logging.
+     * @return result.
+     */
+    public LookupResult strategyLookupForRootObj(AnnotatedObject<LoggableType> annotatedObject) {
+        if (IS_TO_STRING_APPLICABLE_TO_CLASS.test(annotatedObject.getObjectClass())) {
+            return LookupResult.createResolved(
+                    () -> Collections.singletonMap(SINGLE_PROPERTY, annotatedObject.getObject()));
+        }
+
+        return LookupResult.lazy(() -> strategyLookupForField(new HashMap<>(), Pair.of(null, annotatedObject)));
+    }
+
     private LookupResult accessorMethodLookup(AnnotatedObject<LoggableType> annotatedObject) {
         Object object = annotatedObject.getObject();
         if (object instanceof ContextParamsAccessor) {
@@ -292,21 +307,6 @@ public class AnnotationReflectionLookupUtils implements AnnotationLookupConstant
             return LookupUtils.resultingLookup(
                     LookupUtils.conflictingLookup(DO_NOTHING_LOOKUP, collectorLookup, extractorLookup));
         }
-    }
-
-    /**
-     * Create lookup result.
-     *
-     * @param annotatedObject object for logging.
-     * @return result.
-     */
-    public LookupResult strategyLookupForRootObj(AnnotatedObject<LoggableType> annotatedObject) {
-        if (IS_TO_STRING_APPLICABLE_TO_CLASS.test(annotatedObject.getObjectClass())) {
-            return LookupResult.createResolved(
-                    () -> Collections.singletonMap(SINGLE_PROPERTY, annotatedObject.getObject()));
-        }
-
-        return LookupResult.lazy(() -> strategyLookupForField(new HashMap<>(), Pair.of(null, annotatedObject)));
     }
 
     private Stream<Entry<String, Object>> toFieldNameValuePair(

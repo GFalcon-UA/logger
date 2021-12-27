@@ -49,13 +49,6 @@ public class ContextParamExtractorFactory {
         this.defaultContextParamExtractor = defaultContextParamExtractor;
     }
 
-    private Map<Class<?>, ContextParamExtractor<?>> createParameterExtractorMap(
-            List<? extends ContextParamExtractor> contextParamExtractors) {
-        return contextParamExtractors.stream()
-                .flatMap(this::getParamExtractorsEntries)
-                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
-    }
-
     public <E> ContextParamExtractor<E> getExtractorByClass(Class<E> clazz) {
         return (ContextParamExtractor<E>) contextParamExtractors.get(clazz);
     }
@@ -63,6 +56,13 @@ public class ContextParamExtractorFactory {
     public <E> ContextParamExtractor<E> getExtractorByClassSafe(Class<E> clazz) {
         return Optional.ofNullable(contextParamExtractors.get(clazz))
                 .orElse((ContextParamExtractor) defaultContextParamExtractor);
+    }
+
+    private Map<Class<?>, ContextParamExtractor<?>> createParameterExtractorMap(
+            List<? extends ContextParamExtractor> contextParamExtractors) {
+        return contextParamExtractors.stream()
+                .flatMap(this::getParamExtractorsEntries)
+                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
     }
 
     private Stream<Entry<Class<?>, ? extends ContextParamExtractor<?>>> getParamExtractorsEntries(

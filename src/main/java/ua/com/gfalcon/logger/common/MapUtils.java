@@ -95,10 +95,6 @@ public class MapUtils {
                         entry -> StringUtils.lowerCase(defaultString(entry.getValue()))));
     }
 
-    private static <K, V> Map<K, V> makeMapImmutable(Map<K, V> map) {
-        return Collections.unmodifiableMap(new LinkedHashMap<>(map));
-    }
-
     /**
      * Collects maps' keys and values into new map using default merge function: {@code (v1, v2) -> v2}
      * which works as default i.e. rewriting values under non-unique keys.
@@ -114,7 +110,7 @@ public class MapUtils {
     /**
      * Collects maps' keys and values into new map using {@code mergeFunction} to resolve conflicts.
      *
-     * @param maps maps
+     * @param maps          maps
      * @param mergeFunction merge function
      * @return resulting map
      */
@@ -129,12 +125,27 @@ public class MapUtils {
     /**
      * Method converts array of {@code keys} and {@code values} into an immutable map.
      *
-     * @param keys keys
+     * @param keys   keys
      * @param values values
      * @return resulting map
      */
     public static <K, V> Map<K, V> toImmutableMap(K[] keys, V[] values) {
         return makeMapImmutable(toMap(keys, values));
+    }
+
+    /**
+     * Method converts array of {@code keys} and {@code values} into a mutable map.
+     *
+     * @param keys   keys
+     * @param values values
+     * @return resulting map
+     */
+    public static <K, V> Map<K, V> toMutableMap(K[] keys, V[] values) {
+        return toMap(keys, values);
+    }
+
+    private static <K, V> Map<K, V> makeMapImmutable(Map<K, V> map) {
+        return Collections.unmodifiableMap(new LinkedHashMap<>(map));
     }
 
     private static <K, V> Map<K, V> toMap(K[] keys, V[] values) {
@@ -151,16 +162,5 @@ public class MapUtils {
         }
 
         return map;
-    }
-
-    /**
-     * Method converts array of {@code keys} and {@code values} into a mutable map.
-     *
-     * @param keys   keys
-     * @param values values
-     * @return resulting map
-     */
-    public static <K, V> Map<K, V> toMutableMap(K[] keys, V[] values) {
-        return toMap(keys, values);
     }
 }
