@@ -32,6 +32,9 @@ import ua.com.gfalcon.logger.advice.handler.base.LogFlowActionHandler;
 import ua.com.gfalcon.logger.annotation.Log;
 import ua.com.gfalcon.logger.parameters.loggabletype.util.AnnotationReflectionLookupUtils;
 
+/**
+ * Log entry action handler.
+ */
 public class LogEntryActionHandler extends LogFlowActionHandler {
     public LogEntryActionHandler(PrettyLoggable prettyLoggable, AnnotationReflectionLookupUtils reflectionLookupUtils) {
         super(prettyLoggable, reflectionLookupUtils);

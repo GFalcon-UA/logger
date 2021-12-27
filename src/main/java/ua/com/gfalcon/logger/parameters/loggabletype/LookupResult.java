@@ -35,6 +35,9 @@ import static ua.com.gfalcon.logger.parameters.loggabletype.LookupResult.LookupT
 import static ua.com.gfalcon.logger.parameters.loggabletype.LookupResult.LookupType.UNRESOLVED;
 import ua.com.gfalcon.logger.parameters.loggabletype.exception.UnresolvedLookupException;
 
+/**
+ * Lookup Result.
+ */
 public class LookupResult {
 
     private ResultAccessor resultAccessor;
@@ -76,6 +79,9 @@ public class LookupResult {
         return isCertainLookupType(UNRESOLVED);
     }
 
+    /**
+     * Create exceptional.
+     */
     public static LookupResult createExceptional(Supplier<Exception> exceptionSupplier) {
 
         return new LookupResult(ResultAccessor.from(() -> {
@@ -91,6 +97,9 @@ public class LookupResult {
         return new LookupResult(ResultAccessor.from(extractionSupplier), RESOLVED);
     }
 
+    /**
+     * Create unresolved.
+     */
     public static LookupResult createUnresolved() {
         return new LookupResult(ResultAccessor.from(() -> {
             throw new UnresolvedLookupException();
@@ -102,7 +111,8 @@ public class LookupResult {
     }
 
     /**
-     * @return
+     * Execute for result.
+     *
      * @throws UnresolvedLookupException if lookup Is unresolved
      * @throws RuntimeException          for all user defined exceptions
      */
@@ -128,6 +138,9 @@ public class LookupResult {
         return finalLookup;
     }
 
+    /**
+     * Lookup Type.
+     */
     public enum LookupType {
         EXCEPTIONAL,
         RESOLVED,

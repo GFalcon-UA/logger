@@ -33,8 +33,14 @@ import static ua.com.gfalcon.logger.parameters.loggabletype.LookupResult.LookupT
 import static ua.com.gfalcon.logger.parameters.loggabletype.LookupResult.LookupType.RESOLVED;
 import ua.com.gfalcon.logger.parameters.loggabletype.LookupResult;
 
+/**
+ * Lookup Utils.
+ */
 public class LookupUtils {
 
+    /**
+     * Conflicting lookup.
+     */
     public static LookupResult conflictingLookup(LookupResult onConflict, LookupResult... results) {
         List<LookupResult> lookupResults = Arrays.stream(results)
                 .filter(LookupResult::isResolved)
@@ -51,6 +57,9 @@ public class LookupUtils {
         return firstSpecificLookup(EXCEPTIONAL, lookupOrder);
     }
 
+    /**
+     * First specific lookup.
+     */
     public static LookupResult firstSpecificLookup(LookupResult.LookupType lookupType, LookupResult... lookupOrder) {
         if (lookupOrder.length == 1) {
             return lookupOrder[0];
@@ -61,6 +70,9 @@ public class LookupUtils {
                 .orElse(null);
     }
 
+    /**
+     * Resulting lookup.
+     */
     public static LookupResult resultingLookup(LookupResult... lookupOrder) {
         LookupResult errorLookup = errorLookup(lookupOrder);
         if (nonNull(errorLookup)) {

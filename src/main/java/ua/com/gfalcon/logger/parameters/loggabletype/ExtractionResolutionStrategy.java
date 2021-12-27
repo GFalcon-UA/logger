@@ -24,6 +24,9 @@
 
 package ua.com.gfalcon.logger.parameters.loggabletype;
 
+/**
+ * Extraction resolution strategy.
+ */
 public enum ExtractionResolutionStrategy {
     EXTRACTOR_FIRST,
     COLLECTOR_FIRST,

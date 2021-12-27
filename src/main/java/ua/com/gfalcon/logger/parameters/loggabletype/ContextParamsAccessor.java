@@ -26,6 +26,9 @@ package ua.com.gfalcon.logger.parameters.loggabletype;
 
 import java.util.Map;
 
+/**
+ * Context params accessor.
+ */
 public interface ContextParamsAccessor {
     Map<String, Object> extractParams();
 }

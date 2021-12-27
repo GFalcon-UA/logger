@@ -24,6 +24,9 @@
 
 package ua.com.gfalcon.logger;
 
+/**
+ * Logging constants.
+ */
 public final class LoggingConstants {
     public static final String TIME_UNIT = "timeUnit";
     public static final String TASK_NAME = "taskName";

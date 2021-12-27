@@ -35,6 +35,9 @@ import org.springframework.stereotype.Component;
 
 import ua.com.gfalcon.logger.parameters.extractor.ContextParamExtractor;
 
+/**
+ * Long context param extractor.
+ */
 @Component
 public class LongContextParamExtractor implements ContextParamExtractor<Long> {
     @Override

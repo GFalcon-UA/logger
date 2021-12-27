@@ -57,6 +57,8 @@ import ua.com.gfalcon.logger.annotation.ContextParam;
  */
 public interface ContextParamExtractor<E> {
     /**
+     * Get extractable classes.
+     *
      * @return list of classes that can be maintained by this extractor
      */
     List<Class<?>> getExtractableClasses();

@@ -31,6 +31,7 @@ import java.lang.annotation.Target;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * Write log entries.
  * Annotation intended to be a generic one for logging advice:
  * 1) Log entry into the method
  * 2) Log exit from the method(with exec time logging or not)
@@ -38,14 +39,23 @@ import java.util.concurrent.TimeUnit;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Log {
+    /**
+     * Log method arguments.
+     */
     @Retention(RetentionPolicy.RUNTIME)
     @interface Entry {
     }
 
+    /**
+     * Log method returned result.
+     */
     @Retention(RetentionPolicy.RUNTIME)
     @interface Exit {
     }
 
+    /**
+     * Log execution time.
+     */
     @Retention(RetentionPolicy.RUNTIME)
     @interface ExecTime {
         String taskName() default "";

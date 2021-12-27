@@ -45,6 +45,10 @@ import ua.com.gfalcon.logger.parameters.loggabletype.AnnotatedObject;
  * Util class for processing annotated objects.
  */
 public class AnnotatedTypeReflectionUtils {
+
+    /**
+     * Get classes hierarchy.
+     */
     public static List<Class> getClassesHierarchy(Class clazz) {
         List<Class> classList = new ArrayList<>();
         classList.add(clazz);
@@ -61,6 +65,9 @@ public class AnnotatedTypeReflectionUtils {
         return classList;
     }
 
+    /**
+     * Get classes to extract.
+     */
     public static List<Class> getClassesToExtract(AnnotatedObject<LoggableType> annotatedObject) {
         LoggableType annotation = annotatedObject.getAnnotation();
         if (isNull(annotation)) {
@@ -72,6 +79,9 @@ public class AnnotatedTypeReflectionUtils {
         return (annotation.ignoreParents()) ? Collections.singletonList(objectClass) : getClassesHierarchy(objectClass);
     }
 
+    /**
+     * Get renamed field name or default.
+     */
     public static String getRenamedFieldNameOrDefault(Field field) {
         LoggableType.Property annotation = field.getAnnotation(LoggableType.Property.class);
         if (nonNull(annotation) && isNotEmpty(annotation.name())) {
@@ -80,6 +90,9 @@ public class AnnotatedTypeReflectionUtils {
         return field.getName();
     }
 
+    /**
+     * Get supplier method.
+     */
     public static Optional<Method> getSupplierMethod(Object object) {
         List<Method> methods = Stream.of(object.getClass()
                         .getDeclaredMethods())
@@ -95,6 +108,9 @@ public class AnnotatedTypeReflectionUtils {
                 .findFirst();
     }
 
+    /**
+     * Is recursive loop.
+     */
     public static boolean isRecursiveLoop(Map<Class, List<Class>> fieldsProcessedBefore, Field currentField) {
         if (isNull(currentField)) {
             return false;

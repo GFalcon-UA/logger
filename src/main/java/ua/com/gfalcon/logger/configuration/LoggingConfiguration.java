@@ -29,9 +29,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
+/**
+ * Logging configuration.
+ */
 @Configuration
 @Import(ContextExtractorFactoryConfiguration.class)
-@ComponentScan("com.nixsolutions.logging")
+@ComponentScan("ua.com.gfalcon.logger")
 public class LoggingConfiguration {
 
 }

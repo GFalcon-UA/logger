@@ -34,12 +34,18 @@ import ua.com.gfalcon.logger.PrettyLoggable;
 import ua.com.gfalcon.logger.parameters.extractor.ContextParamExtractorFactory;
 import ua.com.gfalcon.logger.parameters.loggabletype.util.AnnotationReflectionLookupUtils;
 
+/**
+ * Log action handler factory.
+ */
 @Component
 public class LogActionHandlerFactory {
     private AnnotationReflectionLookupUtils reflectionLookupUtils;
     private ContextParamExtractorFactory contextParamExtractorFactory;
     private LogContext<Long, String> logContext;
 
+    /**
+     * Create instance.
+     */
     @Autowired
     public LogActionHandlerFactory(AnnotationReflectionLookupUtils reflectionLookupUtils,
             ContextParamExtractorFactory contextParamExtractorFactory, LogContext<Long, String> logContext) {

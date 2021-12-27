@@ -42,6 +42,9 @@ import ua.com.gfalcon.logger.parameters.loggabletype.AnnotatedObject;
 import ua.com.gfalcon.logger.parameters.loggabletype.LookupResult;
 import ua.com.gfalcon.logger.parameters.loggabletype.util.AnnotationReflectionLookupUtils;
 
+/**
+ * Log flow action handler.
+ */
 public abstract class LogFlowActionHandler extends AbstractLogActionHandler {
     protected AnnotationReflectionLookupUtils reflectionLookupUtils;
 

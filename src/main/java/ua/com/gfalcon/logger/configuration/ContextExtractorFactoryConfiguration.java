@@ -37,6 +37,9 @@ import org.springframework.context.annotation.Configuration;
 import ua.com.gfalcon.logger.parameters.extractor.ContextParamExtractor;
 import ua.com.gfalcon.logger.parameters.extractor.ContextParamExtractorFactory;
 
+/**
+ * Context extractor factory configuration.
+ */
 @Configuration
 public class ContextExtractorFactoryConfiguration {
     private static final ContextParamExtractor<Object> DEFAULT_EXTRACTOR = new ContextParamExtractor<Object>() {
@@ -51,6 +54,9 @@ public class ContextExtractorFactoryConfiguration {
         }
     };
 
+    /**
+     * Context param extractor factory.
+     */
     @Bean
     public ContextParamExtractorFactory contextParamExtractorFactory(
             @Autowired List<? extends ContextParamExtractor> contextParamExtractorsList,

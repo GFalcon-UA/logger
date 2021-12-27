@@ -39,6 +39,9 @@ import ua.com.gfalcon.logger.annotation.LoggableType;
 import ua.com.gfalcon.logger.parameters.loggabletype.AnnotatedObject;
 import ua.com.gfalcon.logger.parameters.loggabletype.util.AnnotationReflectionLookupUtils;
 
+/**
+ * Log exit action handler.
+ */
 public class LogExitActionHandler extends LogFlowActionHandler {
 
     private AnnotationReflectionLookupUtils reflectionLookupUtils;

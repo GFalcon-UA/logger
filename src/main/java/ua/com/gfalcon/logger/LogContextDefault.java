@@ -34,6 +34,9 @@ import java.util.stream.Stream;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
+/**
+ * Log context default.
+ */
 @Component
 public class LogContextDefault implements LogContext<Long, String> {
     private static final String KEY_VALUE_DELIMITER = "=";

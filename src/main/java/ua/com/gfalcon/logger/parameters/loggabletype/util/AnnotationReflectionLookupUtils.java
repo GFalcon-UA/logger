@@ -71,6 +71,9 @@ import ua.com.gfalcon.logger.parameters.loggabletype.exception.RecursiveLookupEx
 import ua.com.gfalcon.logger.parameters.loggabletype.exception.RepeatedFieldsException;
 import ua.com.gfalcon.logger.parameters.loggabletype.exception.UnresolvedLookupException;
 
+/**
+ * Annotation reflection lookup utils.
+ */
 @Component
 @SuppressWarnings("unchecked")
 public class AnnotationReflectionLookupUtils implements AnnotationLookupConstants {

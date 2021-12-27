@@ -28,8 +28,7 @@ import ua.com.gfalcon.logger.annotation.LoggableType;
 import ua.com.gfalcon.logger.loggabletype.cases.BasePojo;
 
 @LoggableType
-public class PojoWithUnextractableField implements BasePojo
-{
-  @LoggableType.Property
-  public UnextractablePojo foreignPojo = new UnextractablePojo();
+public class PojoWithUnextractableField implements BasePojo {
+    @LoggableType.Property
+    public UnextractablePojo foreignPojo = new UnextractablePojo();
 }

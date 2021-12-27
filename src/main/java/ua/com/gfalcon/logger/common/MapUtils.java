@@ -103,7 +103,7 @@ public class MapUtils {
      * Collects maps' keys and values into new map using default merge function: {@code (v1, v2) -> v2}
      * which works as default i.e. rewriting values under non-unique keys.
      *
-     * @param maps
+     * @param maps maps
      * @return resulting map
      */
     @SafeVarargs
@@ -114,8 +114,8 @@ public class MapUtils {
     /**
      * Collects maps' keys and values into new map using {@code mergeFunction} to resolve conflicts.
      *
-     * @param maps
-     * @param mergeFunction
+     * @param maps maps
+     * @param mergeFunction merge function
      * @return resulting map
      */
     @SafeVarargs
@@ -129,8 +129,8 @@ public class MapUtils {
     /**
      * Method converts array of {@code keys} and {@code values} into an immutable map.
      *
-     * @param keys
-     * @param values
+     * @param keys keys
+     * @param values values
      * @return resulting map
      */
     public static <K, V> Map<K, V> toImmutableMap(K[] keys, V[] values) {

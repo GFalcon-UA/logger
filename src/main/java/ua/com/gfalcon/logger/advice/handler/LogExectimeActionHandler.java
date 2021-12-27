@@ -43,6 +43,9 @@ import ua.com.gfalcon.logger.advice.handler.base.AbstractLogActionHandler;
 import ua.com.gfalcon.logger.annotation.Log;
 import ua.com.gfalcon.logger.common.WordUtils;
 
+/**
+ * Log execution time action handler.
+ */
 public class LogExectimeActionHandler extends AbstractLogActionHandler {
     public LogExectimeActionHandler(PrettyLoggable prettyLoggable) {
         super(prettyLoggable);

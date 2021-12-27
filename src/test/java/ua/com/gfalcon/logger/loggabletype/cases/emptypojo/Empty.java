@@ -28,6 +28,5 @@ import ua.com.gfalcon.logger.annotation.LoggableType;
 import ua.com.gfalcon.logger.loggabletype.cases.BasePojo;
 
 @LoggableType
-public class Empty implements BasePojo
-{
+public class Empty implements BasePojo {
 }

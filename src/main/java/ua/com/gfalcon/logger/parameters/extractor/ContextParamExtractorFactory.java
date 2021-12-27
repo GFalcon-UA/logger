@@ -32,6 +32,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Context param extractor factory.
+ */
 @SuppressWarnings("unchecked")
 public class ContextParamExtractorFactory {
     private ContextParamExtractor<Object> defaultContextParamExtractor;

@@ -35,6 +35,9 @@ import org.springframework.stereotype.Component;
 
 import ua.com.gfalcon.logger.parameters.extractor.ContextParamExtractor;
 
+/**
+ * String context param extractor.
+ */
 @Component
 public class StringContextParamExtractor implements ContextParamExtractor<String> {
     @Override

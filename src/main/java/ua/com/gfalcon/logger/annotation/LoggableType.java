@@ -31,19 +31,34 @@ import java.lang.annotation.Target;
 
 import ua.com.gfalcon.logger.parameters.loggabletype.ExtractionResolutionStrategy;
 
+/**
+ * Loggable Type.
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface LoggableType {
+    /**
+     * Ignore parents.
+     */
     boolean ignoreParents() default true;
 
+    /**
+     * Resolution strategy.
+     */
     ExtractionResolutionStrategy resolutionStrategy() default ExtractionResolutionStrategy.COLLECTOR_FIRST;
 
+    /**
+     * Property.
+     */
     @Retention(RetentionPolicy.RUNTIME)
     @Target({ElementType.FIELD, ElementType.METHOD})
     @interface Property {
         String name() default "";
     }
 
+    /**
+     * Extraction Method.
+     */
     @Retention(RetentionPolicy.RUNTIME)
     @Target({ElementType.METHOD})
     @interface ExtractionMethod {

@@ -40,6 +40,9 @@ import org.springframework.stereotype.Component;
 import ua.com.gfalcon.logger.advice.handler.LogActionHandlerFactory;
 import ua.com.gfalcon.logger.advice.handler.base.AbstractLogActionHandler;
 
+/**
+ * Logging advice.
+ */
 @Aspect
 @Component
 public class LoggingAdvice {
@@ -85,7 +88,9 @@ public class LoggingAdvice {
         return ((MethodSignature) joinPoint.getSignature()).getMethod();
     }
 
-    //TODO check if advised class has it's own implementation of PrettyLoggable
+    /**
+     * Logging Advice.
+     */
     @Around("@annotation(ua.com.gfalcon.logger.annotation.Log)")
     public Object loggingAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         final Object invocationResult;
