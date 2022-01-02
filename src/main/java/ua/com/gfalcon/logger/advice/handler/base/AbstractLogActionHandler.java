@@ -2,7 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
- * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
+ * Copyright (c) 2021-2022 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ import java.lang.reflect.Method;
 
 import ua.com.gfalcon.logger.PrettyLoggable;
 import ua.com.gfalcon.logger.advice.handler.LogActionHandler;
-import ua.com.gfalcon.logger.annotation.Log;
+import ua.com.gfalcon.logger.annotation.DoLog;
 
 /**
  * Abstract action handler.
@@ -51,6 +51,6 @@ public abstract class AbstractLogActionHandler implements LogActionHandler {
     }
 
     protected boolean isNotApplicable(Method method, Class<? extends Annotation> desiredAnnotation) {
-        return !method.isAnnotationPresent(Log.class) || !method.isAnnotationPresent(desiredAnnotation);
+        return !method.isAnnotationPresent(DoLog.class) || !method.isAnnotationPresent(desiredAnnotation);
     }
 }

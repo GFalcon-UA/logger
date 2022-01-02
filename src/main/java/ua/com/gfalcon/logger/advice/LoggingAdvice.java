@@ -2,7 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
- * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
+ * Copyright (c) 2021-2022 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -58,7 +58,7 @@ public class LoggingAdvice {
     /**
      * Logging Advice.
      */
-    @Around("@annotation(ua.com.gfalcon.logger.annotation.Log)")
+    @Around("@annotation(ua.com.gfalcon.logger.annotation.DoLog)")
     public Object loggingAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         final Object invocationResult;
         final Method method = getMethod(proceedingJoinPoint);

@@ -2,7 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
- * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
+ * Copyright (c) 2021-2022 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -41,7 +41,7 @@ import static ua.com.gfalcon.logger.LoggingConstants.TIME_LOGGING_CONTEXT;
 import static ua.com.gfalcon.logger.LoggingConstants.TIME_UNIT;
 import ua.com.gfalcon.logger.PrettyLoggable;
 import ua.com.gfalcon.logger.advice.handler.base.AbstractLogActionHandler;
-import ua.com.gfalcon.logger.annotation.Log;
+import ua.com.gfalcon.logger.annotation.DoLog;
 import ua.com.gfalcon.logger.common.WordUtils;
 
 /**
@@ -55,13 +55,13 @@ public class LogExectimeActionHandler extends AbstractLogActionHandler {
     @Override
     public void perform(Map<String, Object> params) {
         Method method = (Method) params.get(METHOD_PARAM);
-        if (isNotApplicable(method, Log.ExecTime.class)) {
+        if (isNotApplicable(method, DoLog.ExecTime.class)) {
             return;
         }
 
         Long startTime = (Long) params.get(START_MOMENT_PARAM);
         Long endTime = (Long) params.get(FINISH_MOMENT_PARAM);
-        TimeUnit timeUnit = method.getAnnotation(Log.ExecTime.class)
+        TimeUnit timeUnit = method.getAnnotation(DoLog.ExecTime.class)
                 .timeUnit();
         String taskName = getTaskNameIfPresentOrMethodName(method);
 
@@ -86,7 +86,7 @@ public class LogExectimeActionHandler extends AbstractLogActionHandler {
     }
 
     private String getTaskNameIfPresentOrMethodName(Method method) {
-        Log.ExecTime annotation = method.getAnnotation(Log.ExecTime.class);
+        DoLog.ExecTime annotation = method.getAnnotation(DoLog.ExecTime.class);
 
         if (isNotEmpty(annotation.taskName())) {
             return WordUtils.toCamelCase(annotation.taskName(), SPACE);

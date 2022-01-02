@@ -1,8 +1,8 @@
-#  Log Structured Data 4 Java (lsd4j)
+#  Log Structured Data 4 Java
 
 ### Overview ###
 
-This approach was created to make application logging unified and produce sensible logs in a single format that is recognizable by log parsing software (LogStash, etc).
+This approach was created to make application logging unified and produce sensible logs in a single format that is recognizable by log parsing software (LogStash, etc.).
 
 ### Requirements ###
 
@@ -13,15 +13,15 @@ Java >= 1.8
 Maven
 ```xml
 <dependency>
-   <groupId>com.nixsolutions</groupId>
-   <artifactId>lsd4j</artifactId>
+   <groupId>ua.com.gfalcon</groupId>
+   <artifactId>logger</artifactId>
    <version>${lsd4j.version}</version>
 </dependency>
 ```
 
 Gradle
 ```xml 
-compile group: 'com.nixsolutions', name: 'lsd4j', version: '1.0.SNAPSHOT'
+compile group: 'ua.com.gfalcon', name: 'logger', version: '1.0.0'
 ```
 
 ### Quickstart ###
@@ -32,7 +32,7 @@ Lsd4j has mechanism to create structured logs with annotation driven approach. T
 
 Main annotation that helps to create logs is **@ContextParam**. With this annotation you can mark method parameter as loggable. This means that parameter which marked with this annotation will be processed with lsd4j mechanism and will be added to context logging map.
 
-For example you have method doSomething with two parameters and you want to log the second parameter. All that you need is to mark parameter with @ContextParam annotation.
+For example, you have method doSomething with two parameters, and you want to log the second parameter. All that you need is to mark parameter with @ContextParam annotation.
 
     public void doSomething(String firstParam, @ContextParam User secondParam) {
 	    . . .
@@ -91,12 +91,12 @@ With UserExtractor mechanism of lsd4j will understand what fields of User type w
 
 ## @LoggableType annotation and methods
 
-The second way to create structured logs from POJO object is to annotate class with **@LoggableType** annotation. This approach have two ways to be implemented:
+The second way to create structured logs from POJO object is to annotate class with **@LoggableType** annotation. This approach has two ways to be implemented:
 
 -   Implement ContextParamAccessor and override extractParams method.
 -   Create custom method and annotate it with @LoggableType.extractionMethod annotation
     
-Firstly we will look at first approach. For example we have User class and we want to log some fields from this class. First of all we need to annotate our class with @LoggableType annotation. This means that the User type will be processed with lsd4j Lookup Strategy (will be reviewed later) and marked as Loggable type.
+Firstly we will look at first approach. For example, we have User class, and we want to log some fields from this class. First of all, we need to annotate our class with @LoggableType annotation. This means that the User type will be processed with lsd4j Lookup Strategy (will be reviewed later) and marked as Loggable type.
 
 The second step is to implement **ContextParamAccessor** on your POJO class, in our case it’s User class and override extractParams method.  
   
@@ -133,15 +133,15 @@ So when some method want to create structured logs from POJO object, with lsd4j 
 
 ## Logging Annotations Overview
 
-### @DoLog.entry
+### @DoLog.Entry
 
-You can annotate public methods with **@Log.entry** annotation to write log message with _DEBUG_ log level when method execution is started. Log message will contain:
+You can annotate public methods with **@DoLog.Entry** annotation to write log message with _DEBUG_ log level when method execution is started. Log message will contain:
 * Method name
 * Context information for method arguments. Context information for method argument will be included into log message if it is annotated with **[@ContextParam](#extractors)** or/and class of method argument is annotated with **[@LoggableType](#loggabletype-annotation-and-methods)**.
 
-### @DoLog.exit
+### @DoLog.Exit
 
-You can annotate public methods with **@Log.exit** annotation to write log message when method execution is finished. 
+You can annotate public methods with **@DoLog.Exit** annotation to write log message when method execution is finished. 
 
 Log message will contain:
 * Method name
@@ -150,13 +150,13 @@ Log message will contain:
 
 In exceptional case the log message will have _ERROR_ level, otherwise - _DEBUG_ level.
 
-### @DoLog.exectime
+### @DoLog.ExecTime
 
-You can annotate public methods with **@Log.exectime** annotation to write log message with _DEBUG_ log level when method was completed. 
+You can annotate public methods with **@DoLog.ExecTime** annotation to write log message with _DEBUG_ log level when method was completed. 
 
 This annotation can have next arguments:
 * **taskName** - The name of the task which will be displayed in log message (optional argument). If task name was not specified - method name will be used instead of.
-* **timeUnit** - time unit for method execution time (optional argument). By default it’s millisecond.
+* **timeUnit** - time unit for method execution time (optional argument). By default, it’s millisecond.
 
 The log message will contain:
 * Task name
@@ -165,13 +165,13 @@ The log message will contain:
 
 ### @DoLog
 
-You should annotate method with this annotation if you want enable **[@DoLog.entry](#dologentry)**, **[@DoLog.exit](#dologexit)** and **[@DoLog.exectime](#dologexectime)** annotations.
+You should annotate method with this annotation if you want to enable **[@DoLog.Entry](#dologentry)**, **[@DoLog.Exit](#dologexit)** and **[@DoLog.ExecTime](#dologexectime)** annotations.
 It means that if you want to log when method started, method finished and execution time you should annotate method in the following way:
 ```
     @DoLog
-    @DoLog.entry
-    @DoLog.exit
-    @DoLog.exectime
+    @DoLog.Entry
+    @DoLog.Exit
+    @DoLog.ExecTime
     public void methodA()
     {
         ...

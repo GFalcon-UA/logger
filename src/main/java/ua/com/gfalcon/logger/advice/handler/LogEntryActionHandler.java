@@ -2,7 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
- * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
+ * Copyright (c) 2021-2022 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 
 import ua.com.gfalcon.logger.PrettyLoggable;
 import ua.com.gfalcon.logger.advice.handler.base.LogFlowActionHandler;
-import ua.com.gfalcon.logger.annotation.Log;
+import ua.com.gfalcon.logger.annotation.DoLog;
 import ua.com.gfalcon.logger.parameters.loggabletype.util.AnnotationReflectionLookupUtils;
 
 /**
@@ -46,7 +46,7 @@ public class LogEntryActionHandler extends LogFlowActionHandler {
     @Override
     public void perform(Map<String, Object> params) {
         Method method = (Method) params.get(METHOD_PARAM);
-        if (isNotApplicable(method, Log.Entry.class)) {
+        if (isNotApplicable(method, DoLog.Entry.class)) {
             return;
         }
 

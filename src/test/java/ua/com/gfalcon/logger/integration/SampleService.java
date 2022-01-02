@@ -2,7 +2,7 @@
  * MIT License
  *
  * Copyright (c) 2018 NIX Solutions Ltd.
- * Copyright (c) 2021 Oleksii V. KHALIKOV, PE.
+ * Copyright (c) 2021-2022 Oleksii V. KHALIKOV, PE.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@ import org.springframework.stereotype.Component;
 
 import ua.com.gfalcon.logger.advice.pojo.Pojo;
 import ua.com.gfalcon.logger.annotation.ContextParam;
-import ua.com.gfalcon.logger.annotation.Log;
+import ua.com.gfalcon.logger.annotation.DoLog;
 import ua.com.gfalcon.logger.parameters.loggabletype.exception.LoggerException;
 
 @Component
@@ -48,82 +48,82 @@ public class SampleService {
 
     //Entry
 
-    @Log
-    @Log.Entry
+    @DoLog
+    @DoLog.Entry
     public void method() {
     }
 
-    @Log
-    @Log.Entry
+    @DoLog
+    @DoLog.Entry
     public void method(@ContextParam String strParam) {
 
     }
 
-    @Log
-    @Log.Entry
+    @DoLog
+    @DoLog.Entry
     public void methodWithRenamedParam(@ContextParam("renamedStrParam") String strParam) {
 
     }
 
-    @Log
-    @Log.Entry
+    @DoLog
+    @DoLog.Entry
     public void methodWithMultipleParams(@ContextParam String strParam, @ContextParam Long longParam) {
 
     }
 
-    @Log
-    @Log.Entry
+    @DoLog
+    @DoLog.Entry
     public void methodWithComplexParam(@ContextParam Pojo complexParam) {
 
     }
 
     //Exec time
 
-    @Log
-    @Log.ExecTime
+    @DoLog
+    @DoLog.ExecTime
     public void methodWihExecTimeLogging() {
         timeConsuming();
     }
 
-    @Log
-    @Log.ExecTime(timeUnit = TimeUnit.MICROSECONDS)
+    @DoLog
+    @DoLog.ExecTime(timeUnit = TimeUnit.MICROSECONDS)
     public void methodWithExectimeLoggingAndOtherTimeUnit() {
 
     }
 
-    @Log
-    @Log.ExecTime(taskName = "newTaskName")
+    @DoLog
+    @DoLog.ExecTime(taskName = "newTaskName")
     public void methodWithExectimeLoggingAndOtherTaskName() {
 
     }
 
-    @Log
-    @Log.ExecTime(taskName = "Human readable task name")
+    @DoLog
+    @DoLog.ExecTime(taskName = "Human readable task name")
     public void methodWithExectimeLoggingAndHumanReadableTaskName() {
 
     }
 
     //Exit
 
-    @Log
-    @Log.Exit
+    @DoLog
+    @DoLog.Exit
     public String methodWithStrReturn() {
         return "RETURN_STR";
     }
 
-    @Log
-    @Log.Exit
+    @DoLog
+    @DoLog.Exit
     public Pojo methodWithPojoReturn() {
         return new Pojo();
     }
 
-    @Log
-    @Log.Exit
+    @DoLog
+    @DoLog.Exit
     public void methodWithVoidReturn() {
     }
 
-    @Log
-    @Log.Exit
+    @DoLog
+    @DoLog.Exit
     public void methodTerminatedWithException() {
         throw new LoggerException();
     }
