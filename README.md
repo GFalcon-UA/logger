@@ -178,6 +178,3 @@ It means that if you want to log when method started, method finished and execut
     }
 ```
 
-TBD
-
-gpg --keyserver keys.openpgp.org --send-keys 0EDD73FC915ACE7B78FDA3A4317149724CA0AD12
