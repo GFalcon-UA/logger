@@ -36,6 +36,7 @@
 
     <name>Logger</name>
     <description>Spring AOP Log Structured Data 4 Java</description>
+    <url>https://github.com/GFalcon-UA/logger</url>
 
     <licenses>
         <license>
