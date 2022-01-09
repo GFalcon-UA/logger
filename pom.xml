@@ -32,7 +32,7 @@
 
     <groupId>ua.com.gfalcon</groupId>
     <artifactId>logger</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>Logger</name>
     <description>Spring AOP Log Structured Data 4 Java</description>
