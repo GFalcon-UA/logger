@@ -49,6 +49,7 @@
             </providers>
         </encoder>
     </appender>
+    <logger name="org.springframework.test.context.cache" level="ERROR"/>
     <logger name="jsonLogger" additivity="false" level="DEBUG">
         <appender-ref ref="consoleAppender"/>
     </logger>

@@ -50,15 +50,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         
-        <spring.version>4.3.30.RELEASE</spring.version>
+        <spring.version>5.3.15</spring.version>
         <slf4j.version>1.7.32</slf4j.version>
         <commons.version>1.9</commons.version>
         <guava.version>31.0.1-jre</guava.version>
         <jackson.version>2.13.1</jackson.version>
-        <jupiter.version>5.5.2</jupiter.version>
-        <spring-test-junit5.version>1.5.0</spring-test-junit5.version>
+        <jupiter.version>5.8.2</jupiter.version>
         <logstash-logback-encoder.version>7.0.1</logstash-logback-encoder.version>
-        <logback.version>1.2.9</logback.version>
+        <logback.version>1.2.10</logback.version>
     </properties>
 
     <organization>
@@ -70,7 +69,7 @@
         <developer>
             <id>gfalcon-ua</id>
             <name>Oleksii V. Khalikov</name>
-            <email>oleksii.khalikov [at] gmail.com</email>
+            <email>oleksii.khalikov@gmail.com</email>
             <organization>Khalikov, PE</organization>
             <organizationUrl>gfalcon.com.ua</organizationUrl>
         </developer>
@@ -134,27 +133,6 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>com.github.sbrannen</groupId>
-            <artifactId>spring-test-junit5</artifactId>
-            <version>${spring-test-junit5.version}</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>junit-jupiter-api</artifactId>
-                    <groupId>org.junit.jupiter</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-context</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-test</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-            </exclusions>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
             <version>${logstash-logback-encoder.version}</version>
@@ -172,12 +150,6 @@
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
             <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-            </exclusions>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -188,13 +160,6 @@
             <optional>true</optional>
         </dependency>
     </dependencies>
-
-    <repositories>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-    </repositories>
 
     <profiles>
         <profile>
