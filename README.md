@@ -15,13 +15,13 @@ Maven
 <dependency>
    <groupId>ua.com.gfalcon</groupId>
    <artifactId>logger</artifactId>
-   <version>${lsd4j.version}</version>
+   <version>1.1.1</version>
 </dependency>
 ```
 
 Gradle
 ```xml 
-compile group: 'ua.com.gfalcon', name: 'logger', version: '1.0.0'
+compile group: 'ua.com.gfalcon', name: 'logger', version: '1.1.1'
 ```
 
 ### Quickstart ###
